@@ -1,6 +1,21 @@
 const http = require("http");
 const server = http.createServer((req, res)=> {
-    res.end("hola mundo");
+    const fecha = new Date().getHours()
+    const date = fecha.toString()
+    
+    const hora = () => {
+    if ((date >= 6 ) && (date <=12)) {
+          const dias= "buenos dias";
+          return dias
+    } else if ((date <= 13 ) && (date >= 19)) {
+         const tardes= "buenas tardes"
+         return tardes;
+    } else {
+         const noches = "buenas noches";
+         return noches;
+    }}
+    
+    res.end(hora());
 
 })
 

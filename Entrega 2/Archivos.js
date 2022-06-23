@@ -26,18 +26,25 @@ class Contenedor {
 
 
 
-    async save() {
+    async save(obj) {
         const data = await this.getAll();
-        console.log(data.id)
         
-        let itemID = this.url.id;
-
-
+        
+        let id 
+        const objeto = {...obj, id} 
+        data.push(objeto)
+        
         try {
+            if (data.length == 0) {
+                id = data.length.id -1
+                obj.id = id;
+            } else {
+                obj.id = id +1
+            }
+            await fs.promises.writeFile(this.url, JSON.stringify(data));
             
-            await fs.promises.appendFile(this.url, JSON.stringify(this.url));
             
-            console.log(`Producto Guardado, ID N° ${itemID}`)
+            console.log(`Producto Guardado, ID N° ${id}`)
             
             
         } catch (error) {
@@ -97,6 +104,7 @@ class Contenedor {
 
 let productos= new Contenedor("./productos2.txt");
 productos.getById(3)
+productos.save({nombre: "agua", id:""})
 // let producto1 = new Contenedor({ nombre: "Gin", precio: 3500, url: "/gin.jpg", id: 1 });
 // let producto2 = new Contenedor({ nombre: "Coca", precio: 3500, url: "/gin.jpg", id: 1 });
 // producto2.save()
