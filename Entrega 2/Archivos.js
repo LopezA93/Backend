@@ -1,84 +1,105 @@
-const fs = require("fs");
 
-const archivo = "productos.txt";
+
+const fs = require("fs");
 
 
 class Contenedor {
-    
-    constructor( nombre, precio, url,id) {
-            this.nombre = nombre,
-            this.precio = precio,
-            this.url = url,
-            this.id = id
+
+    constructor(url) {
+        this.url = url
     }
-    
-  
+
     /*Metodos*/
+    async getAll() {
+
+        try {
+            const contenido = await fs.promises.readFile(this.url, "utf-8")
+            const datos = JSON.parse(contenido)
+            return datos
+
+
+        } catch (error) {
+            return console.log(error)
+        }
+
+    }
+
+
+
     async save() {
+        const data = await this.getAll();
+        console.log(data.id)
         
+        let itemID = this.url.id;
 
-         try {
-            await fs.promises.appendFile("./productos2.txt", `
-         {"nombre":"${this.nombre}", 
-         "precio":${this.precio},
-         "url":"${this.url}", 
-         "id":${this.id}},`) 
-            console.log(`Producto Guardado, ID N° ${this.id}`)
-         } catch (error) {
+
+        try {
+            
+            await fs.promises.appendFile(this.url, JSON.stringify(this.url));
+            
+            console.log(`Producto Guardado, ID N° ${itemID}`)
+            
+            
+        } catch (error) {
             console.log(error)
-         }
-
-
-        
+        }
 
     }
 
 
     async getById(num) {
         try {
-            
-            if(num == this.id){
-                const item = {nombre: this.nombre, 
-                precio:this.precio,
-                url:this.url, 
-                id:this.id}
-                return console.log("resultado de GetById:", item)
-            }else {
-                return console.log(null)
-            }
+            const data = await this.getAll();
+            const filtrado = data.find((item) => {
+                if (num == item.id) {
+                    return item
+                } else {
+                    return null
+                }
+            })
+            return console.log("getByID:",filtrado)
+
+
         } catch (error) {
             return console.log(error)
-            
+
         }
     }
-    
-    async getAll(){
+
+    async deleteAll() {
         try {
-            const contenido = await fs.promises.readFile("./productos2.txt", "utf-8" )
-            const items= [contenido]
-            console.log(items)
+            await fs.promises.writeFile(this.url, "[]")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async deletByID(num) {
+        try {
+            const data = await this.getAll();
+            const filtrado = data.filter((item) => {
+                if (num != item.id) {
+                    return item
+                    
+                } else {
+                    return null
+                }
+            })
+            const nuevoArray= fs.promises.writeFile("./productos2.txt", JSON.stringify(filtrado));
+            console.log("deletByID: Producto Eliminado correctamente")
+            return nuevoArray
         } catch (error) {
             return console.log(error)
         }
-
     }
-
 
 }
 
-let producto1 = new Contenedor ("Gin", 3500, "/gin.jpg",1);
-let producto2 = new Contenedor ("Cerveza", 500, "/cerveza.jpg",2);
-let producto3 = new Contenedor ("Vino", 2500, "/vino.jpg",3);
-producto1.save()
-producto2.save()
-producto3.getById(3)
-producto3.getAll()
-
-
-// if(fs.existsSync(archivo)){
-//     console.log("El archivo existe");
-
-// } else {
-//     console.log("El archivo no existe")
-// }
+let productos= new Contenedor("./productos2.txt");
+productos.getById(3)
+// let producto1 = new Contenedor({ nombre: "Gin", precio: 3500, url: "/gin.jpg", id: 1 });
+// let producto2 = new Contenedor({ nombre: "Coca", precio: 3500, url: "/gin.jpg", id: 1 });
+// producto2.save()
+// producto1.getById(3)
+// producto1.deletByID(2)
 
