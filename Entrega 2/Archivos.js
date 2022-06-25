@@ -14,7 +14,7 @@ class Contenedor {
 
         try {
             const contenido = await fs.promises.readFile(this.url, "utf-8")
-            const datos = JSON.parse(contenido)
+            const datos = await JSON.parse(contenido)
             return datos
 
 

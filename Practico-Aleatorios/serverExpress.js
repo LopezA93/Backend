@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 app.get("/visitas", (req, res)=> {
     
     if (req){
-        let count
+        let count= 
         count ++;
         res.send(`la cantidad de visitas es ${count}`)
     } 
