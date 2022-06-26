@@ -17,7 +17,6 @@ class Contenedor {
             const datos = await JSON.parse(contenido)
             return datos
 
-
         } catch (error) {
             return console.log(error)
         }
@@ -101,10 +100,10 @@ class Contenedor {
     }
 
 }
-
-let productos= new Contenedor("./productos2.txt");
-productos.getById(3)
-productos.save({nombre: "agua", id:""})
+module.exports = Contenedor
+// let productos= new Contenedor("./productos2.txt");
+// productos.getById(3)
+// productos.save({nombre: "agua", id:""})
 // let producto1 = new Contenedor({ nombre: "Gin", precio: 3500, url: "/gin.jpg", id: 1 });
 // let producto2 = new Contenedor({ nombre: "Coca", precio: 3500, url: "/gin.jpg", id: 1 });
 // producto2.save()

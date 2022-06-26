@@ -2,29 +2,15 @@ const express = require("express");
 const app = express();
 const fs = require("fs")
 const port = 3001;
+const Contenedor = require("../Entrega 2/Archivos.js")
 
-/*Class*/ 
-class Contenedor {
 
-    constructor(url) {
-        this.url = url
-    }
+/* Contenedor*/
+const archivo = new Contenedor ("../Entrega 2/productos2.txt");
+const getProductos= archivo.getAll();
 
-    /*Metodos*/
-    async productos ()  {
-        try {
-            const items = await fs.promises.readFile(this.url, "utf-8");
-            const datos = JSON.parse(items);
-            return datos
-        } catch (error) {
-            console.log(error)
-        }
-    }
-}
 
-let archivo = new Contenedor ("./productos.txt");
-const getProductos= archivo.productos();
-
+/*Routes*/
 app.get("/",  async (req, res) => {
     const resultado= await getProductos
     res.send(resultado)
@@ -37,6 +23,7 @@ app.get("/productoRandom", async (req, res) => {
     const aleatorio= resultado[Math.floor(Math.random() * resultado.length)];
     res.send(aleatorio) 
 })
+
 
 app.listen(port, () => {
     console.log(`Servidor ${port} Online`);
