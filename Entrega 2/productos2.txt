@@ -1,1 +1,0 @@
-[{"id":1,"producto":"tele"},{"nombre":"Gin","precio":3500,"url":"/gin.jpg","id":2},{"nombre":"fernet","precio":3500,"url":"/gin.jpg","id":3},{"nombre":"agua"}]
