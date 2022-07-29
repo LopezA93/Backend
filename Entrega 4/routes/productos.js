@@ -1,17 +1,16 @@
-const express = require ('express');
-const app = express();
-const {Router} = express;
-const Contenedor = require ("../utils/Contenedor");
-const db= "./routes/productos.json";
+const express = require("express");
+const { Router } = express;
+const Contenedor = require("../utils/Contenedor");
+const db = "./routes/productos.json";
 
-const contenedor = new Contenedor(db)
-// const productos = [];
 
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+const contenedor = new Contenedor(db);
 
-const routerProductos =  Router();
 
+const routerProductos = new Router();
+
+routerProductos.use(express.json());
+routerProductos.use(express.urlencoded({extended:true}));
 
 
 /*Routes*/
@@ -46,22 +45,14 @@ routerProductos.post('/', async (req, res) => {
     res.json(resultado);
 })
 
-routerProductos.put('/:id', async (req, res) =>{
+
+
+routerProductos.put("/:id", async (req, res) => {
     const id = req.params.id;
     const item = req.body;
-    const filtrarProducto= contenedor.getById(id);
-    const resultado= await filtrarProducto
-    
-    res.json(item)
-    // const actualizacion = resultado.map((producto) => {
-    //     if (producto.id == id ){
-    //         return item
-    //     }
-    // })
-    // res.json(actualizacion)
-   
-
-});
+    const dataUp = await contenedor.update(item, id);
+    res.send(dataUp);
+  });
 
 routerProductos.delete('/:id', async (req, res) => {
     const id = req.params.id;

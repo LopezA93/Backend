@@ -1,8 +1,8 @@
 const express = require ('express');
 const app = express();
 const productosRouter = require ('./routes/productos')
-app.use(express.json())
-app.use(express.static('public'));
+
+app.use(express.static('public'))
 app.use('/api/productos', productosRouter)
 
 

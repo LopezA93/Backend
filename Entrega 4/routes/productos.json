@@ -1,1 +1,1 @@
-[{"nombre":"Birra","precio":500,"url":"/birra.jpg","id":1},{"nombre":"Gin","precio":3500,"url":"/gin.jpg","id":2},{"nombre":"fernet","precio":1500,"url":"/fernet.jpg","id":3},{"nombre":"Whiskey","precio":240,"id":4},{"nombre":"Vino","precio":240,"id":5},{"id":6},{"id":7},{"nombre":"Campari","precio":540,"url":"campari.png","id":8},{"id":9}]
+[{"prod":{"nombre":"Cerveza1","precio":"259","url":"./imag.jpg"},"id":"1"},{"nombre":"Gin","precio":3500,"url":"/gin.jpg","id":2},{"nombre":"fernet","precio":1500,"url":"/fernet.jpg","id":3}]
