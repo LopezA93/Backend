@@ -4,7 +4,7 @@ const app = express();
 const productosRouter = require('./routes/productos')
 const carritoRouter = require('./routes/carrito')
 const PORT = 8080;
-app.use(express.json())
+
 app.use(express.static('public'));
 
 app.use('/api/productos', productosRouter)

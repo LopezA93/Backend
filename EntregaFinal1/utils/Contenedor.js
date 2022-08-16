@@ -161,26 +161,38 @@ class Contenedor {
         try {
             const data = await this.getById(num);
             const arrayProd = await data.productos
-            const itemElimiando = this.deletByID(prodId)
-            // const filtrado = arrayProd.filter((item) => {
-            //     if (prodId != item.id) {
-            //         return item
+            const getAll = await this.getAll()
+            const filtrado = arrayProd.filter((item) => {
+                if (prodId != item.id) {
+                    return item
 
-            //     } else {
-            //         return null
-            //     }
-            // })
-            fs.promises.writeFile(
+                } else {
+                    return null
+                }
+            })
+            
+            const nuevoCarrito = {...data, productos: filtrado}
+            console.log(nuevoCarrito)
+            const asd= await this.deletByID(num);
+            asd.push(nuevoCarrito);
 
+            const dataFinal = asd.sort((a, b) => {
+                return a.id - b.id
+            })
+            const nuevoArray = fs.promises.writeFile(
                 this.url,
-
-                JSON.stringify(itemElimiando)
-
+                JSON.stringify(dataFinal)
             );
+            return nuevoArray
+            // fs.promises.writeFile(
+            //     this.url,
+            //     JSON.stringify(...getAll, filtrado)
+
+            // );
 
 
 
-            return filtrado;
+            
         } catch (error) {
             return console.log(error)
         }

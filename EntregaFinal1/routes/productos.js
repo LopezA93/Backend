@@ -20,7 +20,8 @@ routerProductos.get('/', async (req, res) => {
     const prods = productos.getAll();
     const resultado = await prods;
     res.render('pages/vista', {
-        productos : resultado
+        productos : resultado,
+        administrador: administrador
     })
 })
 //Get Producti by ID

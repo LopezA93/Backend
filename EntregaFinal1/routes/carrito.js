@@ -15,7 +15,7 @@ routerCarrito.use(express.urlencoded({ extended: true }))
 
 //POST
 routerCarrito.post('/', async (req, res) => {
-    if (administrador){
+    if (administrador) {
         const item = req.body;
         const carroAgregado = carrito.saveCarrito(item)
         const resultado = await carroAgregado
@@ -23,7 +23,7 @@ routerCarrito.post('/', async (req, res) => {
     } else {
         res.send('ruta no disponible')
     }
-    
+
 
 })
 
@@ -46,7 +46,7 @@ routerCarrito.get('/:id/productos', async (req, res) => {
 
 //DELETE CARRITO
 routerCarrito.delete("/:id", async (req, res) => {
-    if (administrador){
+    if (administrador) {
         const id = req.params.id;
         const carroEliminado = carrito.deletByID(id)
         const resultado = await carroEliminado
@@ -57,37 +57,17 @@ routerCarrito.delete("/:id", async (req, res) => {
 
 })
 
-//DELETE PROD DEL CAROO
-routerCarrito.get(":id/productos/:prod",  async (req, res)=> {
-    const idCarro= req.params.id
-    const idProd= req.params.prod;
+//DELETE PROD DEL CARO
+routerCarrito.delete('/:a/prods/:prod', async (req, res) => {
+    const idCarro = req.params.a
+    const idProd = req.params.prod;
+    console.log(idCarro, idProd)
+    const resultado = await carrito.deletProd(idCarro, idProd)
+    res.json(resultado)
     
-    const carro = carrito.getById(idCarro);
-    const resultado = await carro
-    const productosCarro = resultado.productos
-    const prods= await productosCarro.getById(idProd)
-    res.json(prods)
-        
-    // const resultadoFiltrado= productosCarro.deletByID(idProd)
-    // const ArrayCarro= carrito.deletProd(idCarro, idProd);
-    // const resultadoFiltrado= await ArrayCarro;
-    
-    // const productosDelCarro = resultadoFiltrado.producto
-    // const prods = productosDelCarro.id;
-    
-    // res.json(productosCarro)
-
-
-
-   
-    // if(idProd == prodEliminado.id){
-
-    // }
-
-
-
 
 })
 
 
-module.exports= routerCarrito
+
+module.exports = routerCarrito
