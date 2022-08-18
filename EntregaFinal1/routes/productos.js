@@ -19,6 +19,7 @@ routerProductos.use(express.urlencoded({ extended: true }));
 routerProductos.get('/', async (req, res) => {
     const prods = productos.getAll();
     const resultado = await prods;
+    res.json(resultado);
     res.render('pages/vista', {
         productos : resultado,
         administrador: administrador
@@ -26,6 +27,7 @@ routerProductos.get('/', async (req, res) => {
 })
 //Get Producti by ID
 routerProductos.get("/:id", async (req, res) => {
+   
     const id = req.params.id;
     const filtrado = productos.getById(id);
     const resultado = await filtrado;
@@ -44,13 +46,14 @@ routerProductos.post('/', async (req, res) => {
         const item = req.body;
         const itemAgregado = productos.save(item)
         const resultado = await itemAgregado
-        const getAll= await productos.getAll()
+        const getAll= await productos.getAll();
+        res.send(resultado)
         res.render('pages/vista', {
             productos : getAll
         })
     } else { res.send('ruta no disponible') }
 
-})
+});
 
 //PUT
 routerProductos.put('/:id', async (req, res) => {
@@ -58,7 +61,7 @@ routerProductos.put('/:id', async (req, res) => {
         const id = req.params.id
         const item = req.body;
         const prod = await productos.update(item, id)
-        res.send(prod)
+        res.json(prod)
     } else { res.send('ruta no disponible') }
 
 })

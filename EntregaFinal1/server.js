@@ -16,7 +16,10 @@ app.get('/', (req, res) => {
 
 })
 
+app.get('*', (req, res) => {
+    res.json('Error: Ruta o metodo no implementado')
 
+}) 
 app.listen(PORT, () => {
     console.log(`Server on ${PORT}`)
 })

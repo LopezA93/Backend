@@ -1,5 +1,6 @@
 
 
+const { time } = require("console");
 const fs = require("fs");
 
 
@@ -28,38 +29,29 @@ class Contenedor {
 
 
         let id = data[data.length - 1] + 1;
-
-        obj.id = id
         let timestamp = Date.now()
-        obj.timestamp = timestamp
-        let prod = {
-            id,
+        const carro = {
+            id: id,
             timestamp: timestamp,
-            nombre,
-            descripcion,
-            codigo,
-            foto,
-            precio,
-            stock,
-
+            productos: [obj]
         }
-
-        obj.producto = [...prod]
-
-
-        data.push(obj)
+        
+         
+        
+        
+        data.push(carro)
 
         try {
             if (data.length == 0) {
                 id = 1
-                obj.id = id;
+                carro.id = id;
             } else {
 
-                obj.id = data.length
+                carro.id = data.length
             }
 
             await fs.promises.writeFile(this.url, JSON.stringify(data));
-            return obj
+            return carro
 
 
 
@@ -170,10 +162,10 @@ class Contenedor {
                     return null
                 }
             })
-            
-            const nuevoCarrito = {...data, productos: filtrado}
+
+            const nuevoCarrito = { ...data, productos: filtrado }
             console.log(nuevoCarrito)
-            const asd= await this.deletByID(num);
+            const asd = await this.deletByID(num);
             asd.push(nuevoCarrito);
 
             const dataFinal = asd.sort((a, b) => {
@@ -192,7 +184,7 @@ class Contenedor {
 
 
 
-            
+
         } catch (error) {
             return console.log(error)
         }

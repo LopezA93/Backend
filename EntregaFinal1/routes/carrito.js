@@ -2,10 +2,10 @@ const express = require('express');
 const { Router } = express;
 const Contenedor = require('../utils/Contenedor');
 const db = './utils/carrito.json';
-
+const prods= './utils/items.json'
 const administrador = true
 const carrito = new Contenedor(db);
-
+const productos = new Contenedor(prods)
 const routerCarrito = new Router();
 
 routerCarrito.use(express.json());
@@ -16,16 +16,29 @@ routerCarrito.use(express.urlencoded({ extended: true }))
 //POST
 routerCarrito.post('/', async (req, res) => {
     if (administrador) {
-        const item = req.body;
+        const item = req.body;  
         const carroAgregado = carrito.saveCarrito(item)
         const resultado = await carroAgregado
-        res.json(resultado)
+        res.json(resultado.id)
     } else {
         res.send('ruta no disponible')
     }
 
 
 })
+routerCarrito.post('/:id/productos', async (req, res) => {
+    const id = req.params.id
+    const carro = await carrito.getById(id)
+    const item = await productos.getById(req.body.id)
+    carro.productos.push(item);
+    console.log(carro.productos)
+    const resultado = await carrito.update(carro, id)
+    
+    res.json(resultado)
+
+})
+
+
 
 //GET ARRAY CARRO
 routerCarrito.get('/', async (req, res) => {
@@ -58,7 +71,7 @@ routerCarrito.delete("/:id", async (req, res) => {
 })
 
 //DELETE PROD DEL CARO
-routerCarrito.delete('/:a/prods/:prod', async (req, res) => {
+routerCarrito.delete('/:a/productos/:prod', async (req, res) => {
     const idCarro = req.params.a
     const idProd = req.params.prod;
     console.log(idCarro, idProd)
