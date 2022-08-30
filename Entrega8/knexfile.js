@@ -27,3 +27,9 @@ const knexConfig = {
 }
 
 module.exports = knexConfig
+
+
+// {id: 1, nombre: 'coca', precio: 250},
+//     {id: 2,  nombre: 'agua', precio: 250}
+//     {id: 1, nombre: 'agustin', mensaje:"hola"},
+//     {id: 2,  nombre: 'agustin', mensaje:"chau"}
