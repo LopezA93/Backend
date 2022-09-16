@@ -26,7 +26,9 @@ socket.on('MENSAJES_EXISTENTES', (a) => {
     });
     
 })
-
+socket.on('porcentaje', (a) => {
+    compresion(a)
+})
 
 const enviarMensaje = () => {
     
@@ -66,6 +68,8 @@ const agregarMasajes = (msg) => {
 
 }
 const compresion = (a) => {
+    
+
     const div = document.getElementById('compresion').innerHTML += `
     <div class='card'>
         <p> La compresion es de ${a}</p>

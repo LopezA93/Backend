@@ -1,6 +1,8 @@
 const {faker} = require("@faker-js/faker")
-
-function products(n) {
+const express = require("express");
+const {Router} = express
+const productos= Router()
+productos.get('/api/product-test', (req, res)=> {
     const productos = []
     for (let i=0; i<n; i++) {
         const _producto = {
@@ -14,7 +16,10 @@ function products(n) {
         productos.push(_producto)
     }
     
-    return productos
-}
+    res.json(productos) 
+}) 
 
-module.exports = { products }
+    
+
+
+module.exports =  productos
