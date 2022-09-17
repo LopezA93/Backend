@@ -20,15 +20,19 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/public/index.html")
 })
 
+
 socketServer.on('connection', async (socket) => {
     console.log('conectado al servidor')
     socket.on("chat_message", (msj)=> {
         save(msj)
+        socketServer.sockets.emit('new_message', msj)
     });
     const getAll= await verMsj()
-   
-    socketServer.sockets.emit('MENSAJES_EXISTENTES', getAll)
+    const getAllPesoOriginal= JSON.stringify(getAll).length / 1024
+    console.log(getAllPesoOriginal)
 
+    socketServer.sockets.emit('MENSAJES_EXISTENTES', getAll)
+    socketServer.sockets.emit('porcentaje', getAll, getAllPesoOriginal )
 
 })
 

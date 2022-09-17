@@ -25,9 +25,11 @@ socket.on('MENSAJES_EXISTENTES', (a) => {
         return agregarMasajes(element)
     });
     
+
+    
 })
-socket.on('porcentaje', (a) => {
-    compresion(a)
+socket.on('porcentaje', (a,b) => {
+    compresion(a,b)
 })
 
 const enviarMensaje = () => {
@@ -67,12 +69,16 @@ const agregarMasajes = (msg) => {
 
 
 }
-const compresion = (a) => {
+const compresion = (a,b) => {
+    let desnormalizar = normalizr.denormalize(a.result, file, a.entities);
+    let desnormalizarPeso = JSON.stringify(desnormalizar).length / 1024
+    let resultado = parseInt(b/desnormalizarPeso) 
     
-
+    
+    console.log(resultado)
     const div = document.getElementById('compresion').innerHTML += `
     <div class='card'>
-        <p> La compresion es de ${a}</p>
+        <p> La compresion es de ${resultado} %</p>
 
     </div>
     `
