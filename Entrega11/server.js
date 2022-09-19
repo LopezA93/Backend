@@ -9,7 +9,7 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: 'mongodb+srv://lopeza93:River2022@firstcloster.cxeka9h.mongodb.net/sessions?retryWrites=true&w=majority',
         mongoOptions,
-        ttl: 60,
+        ttl: 600,
         retries: 0
     }),
     secret: "Secret",
