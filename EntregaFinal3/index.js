@@ -16,7 +16,8 @@ const MongoStore = require('connect-mongo')
 const passport = require('passport')
 const users = require('./routes/users');
 const ordenes = require('./routes/ordenes')
-const connection = require('./database/config')
+const connection = require('./database/config');
+const carrito = require('./routes/carrito');
 connection()
 require('./auth/passport')
 
@@ -47,6 +48,7 @@ app.use(passport.initialize())
 
 app.use('/users', users)
 app.use('/ordenes', ordenes)
+app.use('/carrito', carrito)
 app.get('/error', (req, res) => {
     res.send({ message: 'credenciales invalidas' })
 })
