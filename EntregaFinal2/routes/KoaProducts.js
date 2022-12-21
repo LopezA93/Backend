@@ -7,15 +7,15 @@ const productKoaRouter = new Router({
 });
 
 productKoaRouter.get("/", async (ctx) => {
-  const productos = await db.getAll();
-  ctx.body = productos;
+  const product = await db.getAll();
+  ctx.body = product;
 });
 
 productKoaRouter.get("/:id", async (ctx) => {
   const id = ctx.params.id;
-  const producto = await db.getById(id);
-  if (producto) {
-    ctx.body = producto;
+  const product = await db.getById(id);
+  if (product) {
+    ctx.body = product;
   } else {
     ctx.status = 404;
   }
@@ -60,7 +60,7 @@ productKoaRouter.delete("/:id", async (ctx) => {
     ctx.status = 404;
   } else {
     const productDelete = await db.deleteById(id);
-    ctx.body = `Producto eliminado`;
+    ctx.body = `Product deleted`;
   }
 });
 
